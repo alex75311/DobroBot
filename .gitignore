@@ -1,0 +1,4 @@
+conf.py
+.idea
+.venv
+__pycache__
