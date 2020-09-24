@@ -2,3 +2,8 @@ conf.py
 .idea
 .venv
 __pycache__
+delete_comment.log
+example.py
+tmp
+dobrobot_.db
+
