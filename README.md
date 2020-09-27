@@ -5,27 +5,20 @@
 pip install -r requirements.txt
 
 ### Необходимо создать файл conf.py следующего содержания
+
+```
 BOT_TOKEN = 'ТОКЕН_БОТА'
-
 USER_TOKEN = 'ТОКЕН_АДМИНИСТРАТОРА_ГРУППЫ'
-
 API_APP = '0'
-
 API_KEY = '0'
-
 URL_RSS = 'https://dobro.mail.ru/projects/rss/target/'
-
 PREDICTOR_URL = 'ХОСТ_ML' https://github.com/fogugy/dobro_ml
-
 DB_NAME = 'ИМЯ_БД_POSTGRES'
-
 DB_USER = 'ПОЛЬЗОВАТЕЛЬ_БД'
-
 DB_PASSWORD = 'ПАРОЛЬ_БД'
-
 DB_IP = 'IP_БД'
-
 DB_PORT = 'ПОРТ_БД'
+```
 
 ### Запуск:
 
