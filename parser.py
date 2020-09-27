@@ -38,6 +38,11 @@ def parse_rss():
             )
         except IntegrityError as e:
             print(e)
+            offer = Offer.select().where(Offer.offer_id == el['id']).get()
+            if el.picture.text != offer.picture:
+                offer.picture = el.picture.text
+                offer.article_quote = ''
+                offer.save()
 
 
 def create_city(city_name):
@@ -96,6 +101,7 @@ def update_offer(offer_id, online_ml_server=False):
     r = requests.get(offer.url)
     if r.status_code != 200:
         print(f'Ошибка проекта {offer_id} {offer.url} - код {r.status_code}')
+        offer.delete_instance()
         return
     soup = BeautifulSoup(r.text, 'lxml')
     name = soup.find(class_='hdr__inner').text
@@ -168,4 +174,4 @@ if __name__ == '__main__':
     except ConnectionError:
         print('Сервер ML недоступен, все проекты будут считаться персонифицированными')
         update_all_offers(online_ml_server=False)
-    update_offer(3144)
+    # update_offer(3144)
