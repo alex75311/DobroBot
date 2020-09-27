@@ -1,9 +1,9 @@
 import datetime
-
+from conf import DB_IP, DB_NAME, DB_PASSWORD, DB_PORT, DB_USER
 from peewee import *
 
 # db = SqliteDatabase('dobrobot.db')
-db = PostgresqlDatabase('dobrobot', user='postgres', password='mysecretpassword', host='192.168.1.19', port=5000,
+db = PostgresqlDatabase(DB_NAME, user=DB_USER, password=DB_PASSWORD, host=DB_IP, port=DB_PORT,
                         autocommit=True, autorollback=True)
 
 
