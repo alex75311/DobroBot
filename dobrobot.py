@@ -2,6 +2,7 @@ import os
 from datetime import datetime, timedelta
 from random import randint
 
+from peewee import fn
 from vkbottle import Bot, Message
 from vkbottle.api.keyboard import Keyboard, Text, OpenLink
 from vkbottle.user import User
@@ -168,7 +169,7 @@ async def wrapper(ans: Message, category_name):
     def get_project(category_name):
         c = Category.select().where(Category.name == category_name)
         projects = Offer.select().where(Offer.available == True).where(Offer.category_id == c). \
-            where(Offer.personified == True)
+            where(Offer.personified == True).order_by(fn.Random())
         for project in projects:
             yield project
 
@@ -200,6 +201,8 @@ async def branch(ans: Message, *args, **kwargs):
         keyboard.add_button(Text(label='Следующий'), color='primary')
         keyboard.add_row()
         keyboard.add_button(Text(label='Сменить категорию'), color='primary')
+        keyboard.add_row()
+        keyboard.add_button(Text(label='В начало'), color='primary')
 
         try:
             await send_offer_info(ans, next(kwargs['p']).offer_id)
@@ -214,7 +217,7 @@ async def branch(ans: Message, *args, **kwargs):
 @bot.on.message(text="Системные", lower=True)
 async def wrapper(ans: Message):
     def get_project():
-        projects = Offer.select().where(Offer.available == True).where(Offer.personified == False)
+        projects = Offer.select().where(Offer.available == True).where(Offer.personified == False).order_by(fn.Random())
         for project in projects:
             if project.collected_many and project.total_many:
                 yield project
@@ -232,7 +235,7 @@ async def wrapper(ans: Message):
 @bot.on.message(text="Узнать о успехах", lower=True)
 async def wrapper(ans: Message):
     def get_project():
-        projects = Offer.select().where(Offer.available == False)
+        projects = Offer.select().where(Offer.available == False).order_by(fn.Random())
         for project in projects:
             yield project
 
@@ -249,7 +252,7 @@ async def wrapper(ans: Message):
 async def wrapper(ans: Message, _):
     def get_project(diff_many):
         projects = Offer.select().where(Offer.available == True).where((Offer.total_many - Offer.collected_many) <= diff_many). \
-            where(Offer.personified == True)
+            where(Offer.personified == True).order_by(fn.Random())
         for project in projects:
             if project.collected_many and project.total_many:
                 yield project
@@ -269,7 +272,7 @@ async def wrapper(ans: Message, _):
         date_delta = (datetime.today() + timedelta(days=diff_date)).strftime('%Y-%m-%d')
         projects = Offer.select().where(Offer.available == True).where(Offer.final_date <= date_delta).where(
             Offer.final_date >= datetime.today()). \
-            where(Offer.personified == True)
+            where(Offer.personified == True).order_by(fn.Random())
         for project in projects:
             yield project
 
