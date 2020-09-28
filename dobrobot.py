@@ -6,7 +6,7 @@ from peewee import fn
 from vkbottle import Bot, Message
 from vkbottle.api.keyboard import Keyboard, Text, OpenLink
 from vkbottle.user import User
-from conf import BOT_TOKEN, USER_TOKEN, PREDICTOR_URL
+from conf import BOT_TOKEN, USER_TOKEN, PREDICTOR_URL, GROUP_ID, ALBOM_ID
 from models import Offer, Category
 from vkbottle.api.uploader.photo import PhotoUploader
 import requests
@@ -43,8 +43,8 @@ async def get_message_photo_from_url(photo_link):  # первая загрузк
     :param photo_link: url
     :return: photo_id
     """
-    group_id = 198442398
-    albom_id = 274632984
+    group_id = GROUP_ID
+    albom_id = ALBOM_ID
     photo = requests.get(photo_link)
     file_name = f'tmp/{randint(0, 100)}.jpg'
     with open(file_name, 'wb') as file:

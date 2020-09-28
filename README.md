@@ -14,6 +14,8 @@ BOT_TOKEN = 'ТОКЕН_БОТА'
 USER_TOKEN = 'ТОКЕН_АДМИНИСТРАТОРА_ГРУППЫ'
 API_APP = '0'
 API_KEY = '0'
+GROUP_ID = ID группы ВК
+ALBOM_ID = ID альбама для загрузки фото
 URL_RSS = 'https://dobro.mail.ru/projects/rss/target/'
 PREDICTOR_URL = 'ХОСТ_ML'
 DB_NAME = 'ИМЯ_БД_POSTGRES'
@@ -24,6 +26,7 @@ DB_PORT = 'ПОРТ_БД'
 ```
 
 ### Запуск:
+```models.py``` - запустить для создания таблиц в БД
 
 ```parser.py``` - запускать по расписанию для обновления проектов.
 
