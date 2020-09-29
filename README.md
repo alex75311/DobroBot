@@ -31,3 +31,35 @@ DB_PORT = 'ПОРТ_БД'
 ```parser.py``` - запускать по расписанию для обновления проектов.
 
 ```dobrobot.py``` - запустить бота
+
+### Запуск в контейнере
+Установить ```docker-compose```
+
+```apt install docker-compose```
+
+Скачать репозитории
+
+```git clone https://github.com/alex75311/DobroBot.git```
+
+```git clone https://github.com/fogugy/dobro_ml.git```
+
+```cd DobroBot/```
+
+В файле ```docker-compose``` изменить данные на свои
+
+```
+BOT_TOKEN:
+USER_TOKEN:
+GROUP_ID:
+ALBOM_ID:
+API_APP:
+API_KEY:
+PREDICTOR_URL:
+DB_NAME:
+DB_USER:
+DB_PASSWORD:
+DB_IP:
+DB_PORT:
+```
+
+Выполнить команду ```docker-compose up -d``` 
