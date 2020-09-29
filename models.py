@@ -53,10 +53,13 @@ if __name__ == '__main__':
     City.create_table()
     Offer.create_table()
 
-    Category.create(id=1, name='Дети')
-    Category.create(id=2, name='Взрослые')
-    Category.create(id=3, name='Пожилые')
-    Category.create(id=4, name='Животные')
-    Category.create(id=5, name='Природа')
-    City.create(id=0, name='')
-    Category.create(id=32, name='Другое')
+    try:
+        Category.create(id=1, name='Дети')
+        Category.create(id=2, name='Взрослые')
+        Category.create(id=3, name='Пожилые')
+        Category.create(id=4, name='Животные')
+        Category.create(id=5, name='Природа')
+        City.create(id=0, name='')
+        Category.create(id=32, name='Другое')
+    except IntegrityError:
+        pass
