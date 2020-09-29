@@ -81,7 +81,7 @@ def refactor_date_format(date_str):
     try:
         date_str[1] = month[date_str[1]]
     except IndexError:
-        date_str = ['31', 'декабрь', '2099']
+        date_str = ['31', 'December', '2099']
 
     date_str = ' '.join(date_str)
     date_str = datetime.datetime.strptime(date_str, '%d %B %Y').strftime('%Y-%m-%d')
