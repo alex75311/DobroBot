@@ -1,8 +1,8 @@
 import os
 BOT_TOKEN = os.environ.get('BOT_TOKEN')
 USER_TOKEN = os.environ.get('USER_TOKEN')
-GROUP_ID = os.environ.get('GROUP_ID')
-ALBOM_ID = os.environ.get('ALBOM_ID')
+GROUP_ID = int(os.environ.get('GROUP_ID'))
+ALBOM_ID = int(os.environ.get('ALBOM_ID'))
 API_APP = os.environ.get('API_APP')
 API_KEY = os.environ.get('API_KEY')
 URL_RSS = 'https://dobro.mail.ru/projects/rss/target/'
