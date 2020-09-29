@@ -9,7 +9,7 @@ from peewee import IntegrityError
 from requests.exceptions import ConnectionError
 from conf import PREDICTOR_URL, URL_RSS
 
-locale.setlocale(locale.LC_ALL, '')
+# locale.setlocale(locale.LC_ALL, '')
 
 
 def create_offer(name, category_id, url, picture, offer_id):
@@ -62,18 +62,18 @@ def get_city_id(city_name):
 
 def refactor_date_format(date_str):
     month = {
-        'января': 'январь',
-        'февраля': 'февраль',
-        'марта': 'март',
-        'апреля': 'апрель',
-        'мая': 'май',
-        'июня': 'июнь',
-        'июля': 'июль',
-        'августа': 'август',
-        'сентября': 'сентябрь',
-        'октября': 'октябрь',
-        'ноября': 'ноябрь',
-        'декабря': 'декабрь',
+        'января': 'January',
+        'февраля': 'February',
+        'марта': 'March',
+        'апреля': 'April',
+        'мая': 'May',
+        'июня': 'June',
+        'июля': 'July',
+        'августа': 'August',
+        'сентября': 'September',
+        'октября': 'October',
+        'ноября': 'November',
+        'декабря': 'December',
     }
 
     date_str = date_str.split(' ')[1:]
