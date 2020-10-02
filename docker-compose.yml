@@ -17,8 +17,6 @@ services:
     image: fogugy/dobro-ml
     container_name: dobro_ml
     command: sh -c "cd /usr/local/proj && python3 server.py"
-    ports:
-      - 4444:4444
     volumes:
       - ../dobro_ml:/usr/local/proj
     restart: always
@@ -27,7 +25,7 @@ services:
     container_name: dobrobot
     volumes:
       - .:/DobroBot
-    command: sh -c "cd /DobroBot/ && pip install -r requirements.txt && python3 models.py && python3 parser.py && python3 dobrobot.py"
+    command: sh -c "cd /DobroBot/ && pip install -r requirements.txt && python3 models.py && sleep 30 && python3 parser.py && && python3 dobrobot.py"
     environment:
       BOT_TOKEN: 06a8b8c187d859bc5f3dbb559d0c6172a90977cbcb2ab0c8e3d5b60edd1c3282fdeb873edb36b9058ea15
       USER_TOKEN: d56b5e4cb7bc9745fadfe490f8ab5f8bb5d38640497ba06d5682d52b0a77427f412dc7caa202a3d266ce3
@@ -41,13 +39,15 @@ services:
       DB_PASSWORD: mysecretpassword
       DB_IP: db
       DB_PORT: 5432
-    restart: always
     links:
       - dobro-ml
       - db
+    restart: always
   cronjobber:
     image: docker:edge
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     container_name: cronjobber
-    command: sh -c "echo '0 1 * * * docker exec dobrobot python /DobroBot/parser.py' > /etc/crontabs/root && crond -f"
+    links:
+      - bot
+    command: sh -c "echo '0 */8 * * * docker exec dobrobot python /DobroBot/parser.py' > /etc/crontabs/root && crond -f"

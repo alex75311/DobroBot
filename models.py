@@ -2,7 +2,6 @@ import datetime
 from conf import DB_IP, DB_NAME, DB_PASSWORD, DB_PORT, DB_USER
 from peewee import *
 
-# db = SqliteDatabase('dobrobot.db')
 db = PostgresqlDatabase(DB_NAME, user=DB_USER, password=DB_PASSWORD, host=DB_IP, port=DB_PORT,
                         autocommit=True, autorollback=True)
 
@@ -47,19 +46,28 @@ class Offer(BaseModel):
         db_table = 'Offer'
 
 
+class Report(BaseModel):
+    offer = ForeignKeyField(Offer, unique=True)
+    date = DateField(default=datetime.datetime.now)
+
+    class Meta:
+        db_table = 'Report'
+
+
 if __name__ == '__main__':
     db.connect()
     Category.create_table()
     City.create_table()
     Offer.create_table()
+    Report.create_table()
 
     try:
+        City.create(id=0, name='')
         Category.create(id=1, name='Дети')
         Category.create(id=2, name='Взрослые')
         Category.create(id=3, name='Пожилые')
         Category.create(id=4, name='Животные')
         Category.create(id=5, name='Природа')
-        City.create(id=0, name='')
         Category.create(id=32, name='Другое')
     except IntegrityError:
         pass

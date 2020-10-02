@@ -2,12 +2,12 @@ import os
 from datetime import datetime, timedelta
 from random import randint
 
-from peewee import fn
+from peewee import fn, DoesNotExist
 from vkbottle import Bot, Message
 from vkbottle.api.keyboard import Keyboard, Text, OpenLink
 from vkbottle.user import User
 from conf import BOT_TOKEN, USER_TOKEN, PREDICTOR_URL, GROUP_ID, ALBOM_ID
-from models import Offer, Category
+from models import Offer, Category, Report
 from vkbottle.api.uploader.photo import PhotoUploader
 import requests
 import json
@@ -107,6 +107,12 @@ async def send_offer_info(ans: Message, project_id):
             # user = await bot.api.users.get(ans.from_id)
             # user_id = user[0].id
             keyboard.add_button(OpenLink("Хочу помочь", link=get_pay_link(offer.url)))
+        try:
+            Report.select().where(Report.offer == offer).get()
+        except DoesNotExist:
+            pass
+        else:
+            keyboard.add_button(OpenLink("Посмотреть отчет", link=f'{offer.url}reports/'))
         keyboard.add_button(OpenLink("Сделать репост", link=f'https://vk.com/share.php?url={offer.url}'))
         await ans(f'{offer.short_description} \n\n '
                   f'Собрано {offer.collected_many} руб. из {offer.total_many} руб. \n\n Подробнее {offer.url}',
@@ -241,7 +247,7 @@ async def wrapper(ans: Message):
 
     p = get_project()
 
-    await bot.branch.add(ans.peer_id, "canceled", p=p)  #
+    await bot.branch.add(ans.peer_id, "canceled", p=p)
 
     key_dict = NEXT_AND_BACK_KEY_DICT
     keyboard = get_keyboard_button(key_dict)

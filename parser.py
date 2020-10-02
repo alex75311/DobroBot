@@ -1,5 +1,4 @@
 import json
-import locale
 
 from lxml import etree
 import requests
@@ -8,8 +7,6 @@ from models import *
 from peewee import IntegrityError
 from requests.exceptions import ConnectionError
 from conf import PREDICTOR_URL, URL_RSS
-
-# locale.setlocale(locale.LC_ALL, '')
 
 
 def create_offer(name, category_id, url, picture, offer_id):
@@ -89,10 +86,7 @@ def refactor_date_format(date_str):
 
 
 def inactive_all_offers():
-    offers = Offer.select().where(Offer.available == True)
-    for offer in offers:
-        offer.available = False
-        offer.save()
+    Offer.update(available=False).execute()
 
 
 def update_offer(offer_id, online_ml_server=False):
@@ -166,6 +160,21 @@ def update_all_offers(online_ml_server):
         update_offer(offer.offer_id, online_ml_server)
 
 
+def check_report():
+    offers = Offer.select().where(Offer.available == False)
+    for offer in offers:
+        try:
+            Report.select().where(Report.offer == offer).get()
+        except DoesNotExist:
+            report_url = offer.url + 'reports/'
+            r = requests.get(report_url)
+            if r.status_code == 200:
+                row = Report(
+                    offer=offer.id,
+                )
+                row.save()
+
+
 if __name__ == '__main__':
     inactive_all_offers()
     parse_rss()
@@ -174,4 +183,5 @@ if __name__ == '__main__':
     except ConnectionError:
         print('Сервер ML недоступен, все проекты будут считаться персонифицированными')
         update_all_offers(online_ml_server=False)
+    check_report()
     # update_offer(3144)
