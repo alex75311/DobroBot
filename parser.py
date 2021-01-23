@@ -122,7 +122,10 @@ def update_offer(offer_id, online_ml_server=False):
             collected_many = total_many
     elif percent == '0' and collected_many == total_many:
         collected_many = 0
-    final_date = soup.find(class_='note__text breadcrumbs__text').text
+    try:
+        final_date = soup.find(class_='note__text breadcrumbs__text').text
+    except:
+        final_date = 'до 31 декабря 2099'
 
     try:
         create_city(city)
