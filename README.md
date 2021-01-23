@@ -26,6 +26,8 @@ DB_PORT = 'ПОРТ_БД'
 ```
 
 ### Запуск:
+Выполнить команду ```pip install -U https://github.com/timoniq/vkbottle/archive/v2.0.zip```
+
 ```models.py``` - запустить для создания таблиц в БД
 
 ```parser.py``` - запускать по расписанию для обновления проектов.

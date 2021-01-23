@@ -25,10 +25,10 @@ services:
     container_name: dobrobot
     volumes:
       - .:/DobroBot
-    command: sh -c "cd /DobroBot/ && pip install -r requirements.txt && python3 models.py && sleep 30 && python3 parser.py && python3 dobrobot.py"
+    command: sh -c "cd /DobroBot/ && pip install -r requirements.txt && pip install -U https://github.com/timoniq/vkbottle/archive/v2.0.zip && python3 models.py && sleep 30 && python3 parser.py && python3 dobrobot.py"
     environment:
       BOT_TOKEN: 06a8b8c187d859bc5f3dbb559d0c6172a90977cbcb2ab0c8e3d5b60edd1c3282fdeb873edb36b9058ea15
-      USER_TOKEN: d56b5e4cb7bc9745fadfe490f8ab5f8bb5d38640497ba06d5682d52b0a77427f412dc7caa202a3d266ce3
+      USER_TOKEN: 7b1020daecf6a5d3f64fbc9088cd0753a531c8f537e68852002c4809febdc43057eb74a4c56fef105753e
       GROUP_ID: 198442398
       ALBOM_ID: 274632984
       API_APP: 0
